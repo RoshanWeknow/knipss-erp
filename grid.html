@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Box</title>
+	<style>
+		body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 150px);
+    grid-template-rows: repeat(10, 100px);
+    gap: 5px;
+	border-radius:20px;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 20px;
+    border: 1px solid #ddd;
+}
+.marge1{
+	grid-row-start: 1;
+    grid-row-end: 5;
+	grid-column-start: 7;
+    grid-column-end: 8;
+}
+.marge2{
+	grid-row-start: 2;
+    grid-row-end: 3;
+	grid-column-start: 1;
+    grid-column-end: 3;
+
+}
+.marge3{
+	grid-row-start: 2;
+    grid-row-end: 3;
+	grid-column-start: 3;
+    grid-column-end: 5;
+
+}
+.marge4{
+	grid-row-start: 2;
+    grid-row-end: 3;
+	grid-column-start: 5;
+    grid-column-end: 7;
+
+}
+.marge5{
+	grid-row-start: 3;
+    grid-row-end: 5;
+	grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+.marge6{
+	grid-row-start: 3;
+    grid-row-end: 5;
+	grid-column-start: 2;
+    grid-column-end: 3;
+
+}
+.marge7{
+	grid-row-start: 3;
+    grid-row-end: 5;
+	grid-column-start: 3;
+    grid-column-end: 5;
+
+}
+.marge8{
+	grid-row-start: 5;
+    grid-row-end: 11;
+	grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+.marge9{
+	grid-row-start: 5;
+    grid-row-end: 8;
+	grid-column-start:3 ;
+    grid-column-end: 5;
+
+}
+.marge10{
+	grid-row-start: 5;
+    grid-row-end: 8;
+	grid-column-start:5 ;
+    grid-column-end: 8;
+
+}
+.marge11{
+	grid-row-start: 8;
+    grid-row-end: 10;
+	grid-column-start:3 ;
+    grid-column-end: 5;
+
+}
+.marge12{
+	grid-row-start: 9;
+    grid-row-end: 11;
+	grid-column-start:5 ;
+    grid-column-end: 6;
+
+}
+.marge13{
+	grid-row-start: 9;
+    grid-row-end: 11;
+	grid-column-start:6 ;
+    grid-column-end: 7;
+
+}
+.marge14{
+	grid-row-start: 9;
+    grid-row-end: 11;
+	grid-column-start:7 ;
+    grid-column-end: 8;
+	 background-color:
+
+}
+
+
+
+	</style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- Creating 70 grid items -->
+        <div class="grid-item">A</div>
+        <div class="grid-item">B</div>
+        <div class="grid-item">C</div>
+        <div class="grid-item">D</div>
+        <div class="grid-item">E</div>
+        <div class="grid-item">F</div>
+        <div class="grid-item marge1">G</div>
+        <div class="grid-item marge2">H</div>
+        <div class="grid-item marge3">I</div>
+        <div class="grid-item marge4">j</div>
+        <div class="grid-item marge5">k</div>
+        <div class="grid-item marge6">l</div>
+        <div class="grid-item marge7">m</div>
+        <div class="grid-item ">n</div>
+        <div class="grid-item">o</div>
+        <div class="grid-item">p</div>
+        <div class="grid-item">q</div>
+        <div class="grid-item marge8">r</div>
+        <div class="grid-item">s</div>
+        <div class="grid-item marge9">y</div>
+        <div class="grid-item marge10">ac</div>
+        <div class="grid-item">t</div>
+        <div class="grid-item">u</div>
+        <div class="grid-item">v</div>
+        <div class="grid-item marge11">z</div>
+        <div class="grid-item ">ad</div>
+        <div class="grid-item">ae</div>
+        <div class="grid-item">af</div>
+        <div class="grid-item">w</div>
+        <div class="grid-item">x</div>
+        <div class="grid-item">aa</div>
+        <div class="grid-item">ab</div>
+        <div class="grid-item marge12">ag</div>
+        <div class="grid-item marge13">ah</div>
+        <div class="grid-item marge14">ai</div>
+		
+        
+    </div>
+</body>
+</html>
