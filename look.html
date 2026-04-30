@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Links Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f9f9f9;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .icon-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .icon-item {
+      width: 150px;
+      height: 150px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .icon-item:hover {
+      transform: translateY(-10px);
+    }
+
+    .icon {
+      width: 60px;
+      height: 60px;
+      background-size: cover;
+      margin-bottom: 10px;
+    }
+
+    .text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Icon background colors and images */
+    .icon.diploma {
+      background-image: url('diploma-icon-url'); /* Replace with the actual URL */
+      background-color: #4CAF50;
+    }
+
+    .icon.accounts {
+  background-image: url('images/account.png');
+  background-color: #2196F3;
+  background-size: contain; /* Ensures the image fits within the icon */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+
+    .icon.admin {
+      background-image: url('admin-icon-url');
+      background-color: #FF5722;
+    }
+
+    .icon.counsellor {
+      background-image: url('counsellor-icon-url');
+      background-color: #FF9800;
+    }
+
+    .icon.exam {
+      background-image: url('exam-icon-url');
+      background-color: #9C27B0;
+    }
+
+    /* Repeat for other icons */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Quick Links</div>
+    <div class="icon-grid">
+      <div class="icon-item">
+        <div class="icon diploma"></div>
+        <div class="text">Diploma</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon accounts"></div>
+        <div class="text">Accounts</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon admin"></div>
+        <div class="text">Admin</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon counsellor"></div>
+        <div class="text">Counsellor</div>
+      </div>
+      <div class="icon-item">
+        <div class="icon exam"></div>
+        <div class="text">Exam</div>
+      </div>
+      <!-- Repeat the pattern for other icons -->
+    </div>
+  </div>
+</body>
+</html>
