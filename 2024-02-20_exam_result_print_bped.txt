@@ -1,0 +1,513 @@
+<?php 
+include("scripts/settings.php");
+include("exam_crosslist_marksheet_functions.php");
+$msg='';
+$tab=1;
+$responce = 1;
+if(isset($_SESSION['exam_roll_no'])){
+	$_POST['result_course'] = $_SESSION['result_course'];
+	$_POST['exam_roll_no'] = $_SESSION['exam_roll_no'];
+}
+if(isset($_POST['exam_roll_no'])){
+	$sql = 'SELECT `exam_student_info`.`sno` as id,`exam_student_info`.`student_name`,`exam_student_info`.`student_info_sno`,`exam_student_info`.`exam_roll_no`,`exam_student_info`.`dob`,`exam_student_info`.`uin_no`,`exam_student_info`.`course_name`,`student_info`.`father_name`,`student_info`.`mother_name`,`student_info`.`photo_id` FROM `exam_student_info` LEFT JOIN `student_info` ON `exam_student_info`.student_info_sno = `student_info`.sno where `exam_student_info`.`course_name` = "'.$_POST['result_course'].'" AND  `exam_student_info`.`exam_roll_no` = "'.$_POST['exam_roll_no'].'"';
+	
+	//$sql = 'SELECT `exam_student_info`.`sno` as id,`exam_student_info`.`student_name`,`exam_student_info`.`student_info_sno`,`exam_student_info`.`exam_roll_no`,`exam_student_info`.`dob`,`exam_student_info`.`uin_no`,`exam_student_info`.`course_name`,`student_info`.`father_name`,`student_info`.`mother_name`,`student_info`.`photo_id` FROM `exam_student_info` LEFT JOIN `student_info` ON `exam_student_info`.student_info_sno = `student_info`.sno where `exam_student_info`.`course_name` = "'.$_POST['result_course'].'" order by  `exam_student_info`.`exam_roll_no` limit 1';
+	
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+    <!-- Bootstrap CSS -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+    />
+    
+    <title>Result</title>
+
+    <!-- css  -->
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: .8rem;
+		margin:5px!important;
+        /* line-height: 0.9; */
+      }
+      h1{
+        font-size: 1.8rem !important;
+      }
+      h2{
+        font-size: 1.5rem !important;
+      }
+      h3{
+        font-size: 1.3rem !important;
+      }
+      h4{
+        font-size: 1rem !important;
+      }
+      p{
+        font-size: .8rem !important;
+      }
+      td{
+        font-size: .8rem !important;
+      }
+      th{
+        font-size: .8rem !important;
+      }
+		@media print {
+			
+			td{
+				font-size: 15px!important;
+				padding: 5px!important;
+				}
+			th{
+				
+				font-size: 15px!important;
+				padding: 5px!important;
+			}
+			.watermark {
+				color: #ececec; 
+				opacity: 0.5 !important;
+				top: 30% !important;
+				left: 10% !important;
+				font-size: 3rem; 
+			  }
+			  table td{
+			border:1px solid black!important;
+			}
+			.abc{
+				border:1px solid black!important;
+			}
+			
+
+			.marksheet-container {
+				width: 100%;
+				height: 100%;
+				margin: 15px;
+				 /* Ensure each container starts on a new page */
+			}
+			  #printButton {
+				display: none;
+			 }
+			 #overlays1{
+			width:60%!important;
+			margin-bottom:!important;
+			filter:grayscale(100%);
+			margin-top:20px!important;
+			position:relative;
+			z-index:-1000;
+			}
+			.pp{
+			padding-top:20px!important;
+			}
+			 
+			  
+			
+		}
+		
+		.look{
+			padding:5px!important;
+			margin:0px!important;
+			font-size:13px;
+		}
+			
+		
+	  
+		@page{
+        size: A4;
+        margin:10px;
+        margin-right:25px!important;
+		}
+		.watermark {
+		  position: absolute;
+		  top: 50%;
+		  left: 20%;
+		  opacity: 0.8;
+		  z-index: -100;
+		  color: #aeabab ;
+		  font-size: 6.1rem;
+		  transform: rotate(-45deg);
+		  font-weight: normal;
+		  user-select: none;
+		}
+		
+
+		.merge_column1 {
+			position: absolute;
+			top: 2%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			background-color: white;
+			padding-top: 0.1rem; padding-inline:0.1rem;
+			/*padding-left : 20px;
+			padding-right : 20px;*/
+		}
+		.look{
+			padding-left:10px!important;
+		}
+		table td{
+			border:1px solid black;
+		}
+		.abc{
+			border:1px solid black;
+		}
+		#overlays1{
+			width:40%;
+			margin-top:200px;
+			margin-right:50px!important;
+			filter:grayscale(100%);
+			
+		}
+	
+		#main{
+			margin:10px!important;
+			padding:5px;
+		}
+		
+    </style>
+    <!-- <link rel="stylesheet" href="style.css" media="print"> -->
+    <!-- googlefont -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,700&display=swap"
+      rel="stylesheet"
+    />
+	<script>
+		function printAndRemoveButton() {
+		  // Trigger the print action
+		  window.print();
+
+		  // Remove the print button
+		  var printButton = document.getElementById('printButton');
+		  printButton.parentNode.removeChild(printButton);
+		}
+    </script>
+  </head>
+
+  <body class="w-100 m-auto" id="main">
+	<div style="text-align:center">
+		<button id="printButton" onclick="printAndRemoveButton()" class=" btn btn-danger btn-sm text-center" >Print</button>
+	</div>
+
+   <!-- <div class="" style="display:flex ; justify-content: center ;">
+      <button class="btn btn-secondary btn-print" style="width: 5%;" onclick="print()">Print</button>
+    </div>-->
+	<img src="images/kni_logo.png"  id="overlays" style=" z-index:-2;opacity:0.0;position: absolute;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%); width:30%;" alt="overlay image" >
+	 <img src="images/logo_bg.png"  id="overlays1" style=" z-index:-2;opacity:0.15;position: absolute;top: 40%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%); width:30%; " alt="overlay image" >
+    <div  style="">
+        <div class="container-fluid">
+			
+            <table width="100%" style="margin:0px;">
+			<div class="watermark">Internet Copy</div>
+			<tr>
+				<th width="12%" rowspan="2"><img style="padding:15px; height:65px; width:65px; " src="images/kni_logo.png" alt="logo" class="img-fluid d-block m-auto" /> </th>
+				<th width="88%">
+					<h4 class="" style="text-align: center; margin:0px; " ><span style="font-size:17px;white-space:nowrap;" class="head-name"><b>Kamla Nehru Institute Of Physical & Social Sciences,Sultanpur, Uttar Pradesh</b></span> <br>An Autonomous Institute And Accredited "A" Grade by NAAC<br><span style="font-size:14px;">(Affiliated to Dr. Rammanohar Lohia Avadh University, Ayodhya U.P.)</span></h4>
+				</th>
+			</tr>
+		</table>
+		<?php
+			$result =mysqli_query($db,$sql);
+			if(mysqli_num_rows($result)>0){
+				$row=mysqli_fetch_assoc($result);
+		?>
+            <table class="table table-borderless" width="100%">
+				<tr>
+					<th class="text-center" colspan="5"><span style="font-size:12px;">PROVISIONAL MARKSHEET<br>2023-2024</span></th>
+				</tr>
+                <tr>
+					<th  class="look">Name </th>
+					<th width="25%" class="look">: <?php echo strtoupper($row['student_name']); ?></th >
+					<th  class="look">Roll NO.</th>
+					<th width="25%" class="look">: <?php echo $row['exam_roll_no']; ?></th >
+					<th width="20%" rowspan="5">
+					<?php
+						if(fileExists("PHOTO/".$row['photo_id'])){
+							$photo = fileExists("PHOTO/".$row['photo_id']);
+						}
+						else{
+							$photo = $row['photo_id'];
+						}
+					?>
+					<?php //echo $photo; ?>
+					<img style="width:80px; height:65px; " src="<?php echo $photo; ?>" alt="Student Image"></th>
+				</tr>
+				<tr>
+					<th class="look">Father's Name</th>
+					<th class="look">: <?php echo strtoupper($row['father_name']); ?></th >
+					<th class="look">Class</th>
+					<th class="look">: <?php
+						$sql_class = 'select * from class_detail where sno = "'.$row['course_name'].'"';
+						$row_class = mysqli_fetch_assoc(mysqli_query($db,$sql_class));
+						echo $row_class['class_description']; 
+						?>
+					</th >
+				</tr>
+				<tr>
+					<th class="look">Mother's Name</th>
+					<th class="look">: <?php echo strtoupper($row['mother_name']); ?></th >
+					<th class="look">UIN NO.</th>
+					<th class="look">: <?php echo $row['uin_no']; ?></th >
+				</tr>
+				<tr>
+					<th class="look">College</th>
+					<th colspan="3" class="look">: K.N.I.P.S.S. SULTANPUR</th >
+				
+				</tr>
+			</table>	
+            <table class="table text-center" width="100%" style="border:1px solid black; ">
+				<?php
+					if($_POST['result_course']==107){
+						$a1 = 70;
+						$a2 = 28;
+						$b1 = 30;
+						$b2 = 12;
+						$c1 = 100;
+						$c2 = 40;
+						$d = 400;
+						$e = 160;
+						$f1 = 70;
+						$f2 = 35;
+						$g1 = 30;
+						$g2 = 15;
+						$h1 = 100;
+						$h2 = 50;
+						$i = 400;
+						$j = 200;
+					}
+					if($_POST['result_course']==245){
+						$a1 = 80;
+						$a2 = 24;
+						$b1 = 20;
+						$b2 = 06;
+						$c1 = 100;
+						$c2 = 36;
+						$d = 300;
+						$e = 108;
+						$f1 = 0;
+						$f2 = 0;
+						$g1 = 0;
+						$g2 = 0;
+						$h1 = 30;
+						$h2 = 25;
+						$i = 0;
+						$j = 0;
+					}
+					if($_POST['result_course']==87){
+						$a1 = 80;
+						$a2 = 24;
+						$b1 = 20;
+						$b2 = 6;
+						$c1 = 100;
+						$c2 = 36;
+						$d = 300;
+						$e = 108;
+						$f1 = 0;
+						$f2 = 0;
+						$g1 =0 ;
+						$g2 =0 ;
+						$h1 = 50;
+						$h2 = 25;
+						$i = 0;
+						$j = 0;
+					}
+					$paperCodeArray = array();
+						$sql2 = "SELECT * FROM exam_student_paper_info WHERE exam_student_info_sno = '".$row['id']."' ORDER BY theory_practical DESC"; 
+						$result2 = mysqli_query($db, $sql2);
+						$row_num = mysqli_num_rows($result2);
+						$tot_max=0;
+						$tot_obt=0;
+						$ufm_exist = 0;
+						$theroy_sum = 0;
+						$prac_sum = 0;
+						$prac_max_sum = 0;
+						$theory_max_sum = 0;
+						$stu_abs = 0;
+						$inc = 0;
+						$passing_status = "PASSED";
+					while ($row2 = mysqli_fetch_assoc($result2)) {
+						$inc++;
+						$total_abs = 0;
+						$practical_marks_70 = 0;
+						$practical_marks_30 = 0;
+						$theory_marks_70 = 0;
+						$theory_marks_30 = 0;
+						$theory_total_max = 0;
+						$practical_total_max = 0;
+						
+						$paperCode = $row2['paper_code'];
+						$sql3 = 'SELECT * FROM `exam_paper_code_mapping` where `theory_paper_code` = "'.$paperCode.'"';
+						
+						$result3 =mysqli_query($db,$sql3);
+						if(isset($student_paper)){
+							unset($student_paper);
+						}
+						if(mysqli_num_rows($result3)>0){
+							$row3=mysqli_fetch_assoc($result3);
+							$student_paper = $row3['theory_paper_code'];
+							$student_practical_paper = $row3['practical_paper_code'];
+						}
+						else{
+							if(isset($row3)){
+								unset($row3);
+							}
+						}
+						if($row2['type_status']=='2'){
+							$sql_1 = 'select * from add_subject2 where sno="'.$row2['subject_id'].'"';
+							$other_sub = mysqli_fetch_assoc(execute_query($db, $sql_1));
+							if($other_sub['subject_type']=='1'){
+								unset($row3);
+							}
+						}
+						
+						if(isset($student_paper)){
+							$sql4 = 'SELECT * FROM `exam_student_paper_info` where `exam_student_info_sno` = "'.$row2['exam_student_info_sno'].'" && paper_code = "'.$student_paper.'"';
+							
+							$result4 =mysqli_query($db,$sql4);
+							$row4=mysqli_fetch_assoc($result4);
+							
+							if (!in_array($paperCode, $paperCodeArray)) {
+								$paperCodeArray[] = $paperCode;
+									
+							if($row4['theory_practical']=="Theory"){
+								$theory_marks_max=$row4['pt_marks_max'];
+								$theory_marks_obt=$row4['pt_marks_obt'];
+								$mid_marks_max=$row4['mid_sem_marks_max'];
+								$mid_marks_obt=$row4['mid_sem_marks_obt'];
+								$practical_marks_max='';
+								$practical_marks_obt='';
+							}
+							if($row4['theory_practical']=="Practical"){
+								$practical_marks_max='';
+								$practical_marks_obt='';
+								$theory_marks_max=$row4['pt_marks_max'];
+								$theory_marks_obt=$row4['pt_marks_obt'];
+								$mid_marks_max=$row4['mid_sem_pt_max'];
+								$mid_marks_obt=$row4['mid_sem_pt_obt'];
+							}
+				?>
+					<?php
+							if($row4['theory_practical']=="Theory"){
+								if(!isset($paper_type_show_theory)){
+									$paper_type_show_theory = $row4['theory_practical'];
+									echo '<tr style="border:1px solid black; "><th width="55%" class="abc text-start">Subject Selected / Question Paper <br>(THEORY)<span style="margin-left:200px;">Max/Min</span> </th> <th  width="15%" class="abc ">Th.<br>'.$a1.'/'.$a2.'</th> <th  width="15%" class="abc ">Sess.<br>'.$b1.'/'.$b2.'</th><th  width="15%" class="abc " > Total<br>'.$c1.'/'.$c2.'</th></tr>';
+								}
+							}
+							if($row4['theory_practical']=="Practical"){
+								if(!isset($paper_type_show_th_sum)){
+									$paper_type_show_th_sum = "th_sum";
+									echo '<tr style="border:1px solid black; "> <td class="abc text-start" colspan="2"><b>THEORY TOTAL <span style="margin-left:100px;"> Max.'.$d.'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Min.'.$e.'</span></b></td>  <td class="abc text-end" colspan="3" ><b>'.$theroy_sum.'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</b></td></tr>';
+								}
+								if(!isset($paper_type_show_practical)){
+									$paper_type_show_practical = $row4['theory_practical'];
+									echo '<tr style="border:1px solid black; "><th width="55%" class="abc text-start">PRACTICAL<span style="margin-left:200px;">Max/Min</span> </th> <th  width="15%" class="abc ">'.$f1.'/'.$f2.'</th> <th  width="15%" class="abc ">'.$g1.'/'.$g2.'</th><th  width="15%" class="abc " >'.$h1.'/'.$h2.'</th></tr>';
+								}
+							}
+					?>
+							<tr style="border:1px solid black; ">
+								<td class="text-start ps-2"><?php echo $row4['title_of_paper']; ?></td>
+								<td><?php echo $theory_marks_obt; ?></td>
+								<td><?php echo  $mid_marks_obt; ?></td>
+							<td><?php 
+									if($theory_marks_obt == 'Abs' && $mid_marks_obt == 'Abs'){
+										echo  $th_total = "Abs";
+									}else{
+										echo  $th_total = (float)$theory_marks_obt+(float)$mid_marks_obt; 
+									}
+								?></td>
+								<?php  $max_total = (float)$theory_marks_max+(float)$mid_marks_max; ?>
+							</tr>
+				<?php		
+								if($theory_marks_obt!='Abs'){
+									$stu_abs = 1;
+								}
+								if($mid_marks_obt!='Abs'){
+									$stu_abs = 1;
+								}
+								if($row4['theory_practical']=="Theory"){
+									$theroy_sum += (float)$th_total;
+									$theory_max_sum += $max_total;
+									if($theory_marks_obt<$a2){
+										$passing_status = "FAILED";
+									}
+									if($mid_marks_obt<$b2){
+										$passing_status = "FAILED";
+									}
+								}
+								if($row4['theory_practical']=="Practical"){
+									$prac_sum += (float)$th_total;
+									$prac_max_sum += $max_total;
+									if($theory_marks_obt<$f2){
+										$passing_status = "FAILED";
+									}
+									if($mid_marks_obt<$g2){
+										$passing_status = "FAILED";
+									}
+								}
+								$tot_max+=$max_total;
+								$tot_obt+=(float)$th_total;
+							}	
+						}	
+						if($inc == $row_num){
+							if($row4['theory_practical']=="Practical"){
+								if(!isset($paper_type_show_pt_sum)){
+									$paper_type_show_pt_sum = "pt_sum";
+									echo '<tr style="border:1px solid black; "><td class="abc text-start" colspan="2"><b>PRACTICAL TOTAL <span style="margin-left:100px;"> Max.'.$i.'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Min.'.$j.'</span></b></td> <td class="abc text-end" colspan="3" ><b>'.$prac_sum.'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</b></td> </tr>';
+								}
+							}
+						}
+					}	
+					
+					if($theroy_sum<$e){
+						$passing_status = "FAILED";
+					}if($prac_sum<$j){
+						$passing_status = "FAILED";
+					}
+					if($stu_abs == 0){
+						$passing_status = "ABSENT";
+					}
+				?>
+				
+				
+				
+				
+				<tr  style="border:1px solid black; " >
+                    <th  class=" p-2 text-start"  style="border:1px solid black; "> <br>MAX MARKS <br><br>MARKS OBTAINED <br></th>
+                    <th  class="text-center" rowspan="2"  style="border:1px solid black; "><br>Grand Total <br><?php echo $tot_obt; ?> / <?php echo $tot_max; ?></th>
+                    <th  class="text-center" rowspan="2" colspan="2" style="border:1px solid black; "><br>Result/Division<br><?php echo $passing_status; ?></th>
+                </tr>
+				<tr  style="border:1px solid black; " >
+                </tr>
+            </table>
+			
+			<table>
+				<tr>
+					<th>RESULT DECLARATION DATE : 16-02-2024</th>
+				</tr>
+			<table>
+        </div>
+		</div>
+    <div>
+  </body>
+</html>
+<?php
+	}			
+else{?>
+<script>
+  alert("Roll number not found.");
+  window.location.href = "exam_result.php";
+</script>
+<?php
+}
+}
+?>
